@@ -1,0 +1,99 @@
+not for esp32 s3 
+file in 'esp32_s3_hscale_train'
+For program upload, only connect usb to uart
+Debug easy. jsut connect both usb connector.
+
+MQTT only work at 50 44 45 type
+board as master
+reset eeprom switch
+LED = MQTT connected
+LED = WIFI connected
+LED = run mode
+LED = Cool boot/ io pin to reset
+ADDRESS URL 
+
+if ladder program fault, can not restart; switch for reboot is required.
+reset all switch
+check MQTT position before load icon
+disable all network
+
+fix clear all memory in pc
+
+let ste=window.location.hostname;
+plcsvgut.js different 
+add css
+Serial.println (WiFi.localIP ())
+
+About update 
+//ESP32_S3_240B_V2
+"homehw.h" for web support   (1)
+"staticpromipcw.h" for two Chips (2)
+//PLCSVG240B_V2             
+"homehw.h" for web simulate   (4)
+//PLC_Combine
+"homehw.h" for web support    (1)
+"homehwhw.h" for no web support (3)
+
+//Set top password must with hardware switch//
+
+[env:esp32-s3-devkitc-1]
+;[env:esp32dev]
+build_flags =     
+	-I includeJS	
+platform = espressif32
+board = esp32-s3-devkitc-1
+;board = esp32dev
+framework = arduino
+monitor_speed = 115200
+lib_deps = 
+	terrorsl/sMQTTBroker@^0.1.6
+	knolleary/PubSubClient@^2.8
+	ottowinter/AsyncMqttClient-esphome@^0.8.6
+upload_port = com3
+
+//in 'esp_http_server.h' file
+#define HTTPD_DEFAULT_CONFIG() {                        \
+        .task_priority      = tskIDLE_PRIORITY+5,       \
+        .stack_size         = 4096,                     \
+        .core_id            = tskNO_AFFINITY,           \
+        .server_port        = 80,                       \
+        .ctrl_port          = 32768,                    \
+        .max_open_sockets   = 10,       \10
+        .max_uri_handlers   = 16,       \16
+        .max_resp_headers   = 13,       \8
+        .backlog_conn       = 5,                        \
+        .lru_purge_enable   = false,                    \
+        .recv_wait_timeout  = 5,                        \
+        .send_wait_timeout  = 5,                        \
+        .global_user_ctx = NULL,                        \
+        .global_user_ctx_free_fn = NULL,                \
+        .global_transport_ctx = NULL,                   \
+        .global_transport_ctx_free_fn = NULL,           \
+        .open_fn = NULL,                                \
+        .close_fn = NULL,                               \
+        .uri_match_fn = NULL                            \
+}
+
+step 1 *check version in plcsvg file 
+step 2 *check mcu type and change ini file
+step 3 set number input and output in Preperty file
+step 4 set features in icontext file
+step 5 set picicon heigth in PCC file item svgpic 
+
+//
+Mqtt in phone:
+MqttWebPic_V1
+
+Web in PLC:
+PLCSVG240B_V2
+
+PLC in HW
+PLC_Combine_V2
+
+Http in PLC
+PLChtml_V2
+//
+PCB_ESP32samllPLCv-5A = bottom 
+ESP32samllPLCv-5B_2 = TOP 
+PCB_ESP32samllPLCv-5_4 = bottom 6 relay 
+

@@ -1,0 +1,76 @@
+; PlatformIO Project Configuration File
+;
+;   Build options: build flags, source filter
+;   Upload options: custom upload port, speed and extra flags
+;   Library options: dependencies, extra library storages
+;   Advanced options: extra scripting
+;
+; Please visit documentation for the other options and examples
+; https://docs.platformio.org/page/projectconf.html
+
+;[env:pico]
+;platform = raspberrypi
+;board = pico
+;framework = arduino
+
+
+[env:genericSTM32F411CE]
+platform = ststm32
+board = genericSTM32F411CE
+framework = arduino
+
+upload_protocol = stlink
+debug_tool = stlink
+; board_build.core = maple
+board_build.core = stm32
+
+
+#include <TMCStepper.h>
+
+// Define the stepper motor settings
+#define DIR_PIN 2
+#define STEP_PIN 3
+#define EN_PIN 4
+
+// Create an instance of the TMC2209Stepper class
+TMC2209Stepper driver;
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Set up the motor pins
+  pinMode(DIR_PIN, OUTPUT);
+  pinMode(STEP_PIN, OUTPUT);
+  pinMode(EN_PIN, OUTPUT);
+
+  // Enable the motor driver
+  digitalWrite(EN_PIN, LOW);
+
+  // Set the motor current (in mA)
+  driver.begin();
+  driver.setIhold(1000); // Set the motor current to 1000mA
+}
+
+void loop() {
+  // Move the motor in one direction
+  digitalWrite(DIR_PIN, HIGH);
+  for (int i = 0; i < 400; i++) {
+    digitalWrite(STEP_PIN, HIGH);
+    delayMicroseconds(500);
+    digitalWrite(STEP_PIN, LOW);
+    delayMicroseconds(500);
+  }
+
+  delay(1000); // Pause for 1 second
+
+  // Move the motor in the opposite direction
+  digitalWrite(DIR_PIN, LOW);
+  for (int i = 0; i < 400; i++) {
+    digitalWrite(STEP_PIN, HIGH);
+    delayMicroseconds(500);
+    digitalWrite(STEP_PIN, LOW);
+    delayMicroseconds(500);
+  }
+
+  delay(1000); // Pause for 1 second
+}
